@@ -4,7 +4,7 @@
       "@/*": ["./*"],
       "@app/*": ["./app/*"],
       "@assets/*": ["./src/assets/*"],
-      "@models/*": ["./app/models/*"],
+      "@models/*": ["./src/models/*"],
       "@utils/*": ["./src/utils/*"]
     }
   }

@@ -2,11 +2,7 @@ import Image from "next/image";
 import { arrow } from "@assets/icons";
 
 const renderContent = {
-  1: (
-    <div className='sm:text-xl sm:leading-snug text-center neo-brutalism-blue py-4 px-8 text-white mx-5'>
-      <h1>{"Hello, it's WinnieS here"}</h1>
-    </div>
-  ),
+  1: null,
   2: (
     <InfoBox
       text={"this is my practicing project using three.js"}
@@ -16,15 +12,15 @@ const renderContent = {
   ),
   3: (
     <InfoBox
-      text={"here is my other frontend projects"}
+      text={"here is my other 3d projects"}
       link={"/projects"}
-      btnText={"view my projects"}
+      btnText={"view other d3 things"}
     />
   ),
   4: (
     <InfoBox
       text={"this is my project page this is my project page"}
-      link={"/"}
+      link={"/contact"}
       btnText={"contact me"}
     />
   ),

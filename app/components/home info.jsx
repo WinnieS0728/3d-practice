@@ -1,0 +1,56 @@
+import Image from "next/image";
+import { arrow } from "@assets/icons";
+
+const renderContent = {
+  1: (
+    <div className='sm:text-xl sm:leading-snug text-center neo-brutalism-blue py-4 px-8 text-white mx-5'>
+      <h1>{"Hello, it's WinnieS here"}</h1>
+    </div>
+  ),
+  2: (
+    <InfoBox
+      text={"this is my practicing project using three.js"}
+      link={"/about"}
+      btnText={"learn more"}
+    />
+  ),
+  3: (
+    <InfoBox
+      text={"here is my other frontend projects"}
+      link={"/projects"}
+      btnText={"view my projects"}
+    />
+  ),
+  4: (
+    <InfoBox
+      text={"this is my project page this is my project page"}
+      link={"/"}
+      btnText={"contact me"}
+    />
+  ),
+};
+
+function InfoBox({ text, link, btnText }) {
+  return (
+    <div className='info-box'>
+      <p className='font-medium sm:text-xl text-center'>{text}</p>
+      <a
+        href={link}
+        className='neo-brutalism-white neo-btn'
+      >
+        {btnText}
+        <Image
+          src={arrow}
+          alt='arrow'
+          width={"1rem"}
+          height={"1rem"}
+          className='object-contain'
+        />
+      </a>
+    </div>
+  );
+}
+
+export default function HomeInfo({ currentState }) {
+  return renderContent[currentState] || null;
+}

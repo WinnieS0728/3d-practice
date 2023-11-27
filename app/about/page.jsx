@@ -5,7 +5,7 @@ import AboutMe from "./components/about me";
 export default function AboutPage() {
   return (
     <>
-      <main className='px-8 space-y-8'>
+      <main className='space-y-8'>
         <AboutMe />
         <AboutProject />
       </main>

@@ -9,12 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
+    "@hookform/resolvers": "^3.3.2",
     "@react-spring/three": "^9.7.3",
     "@react-three/drei": "^9.88.17",
     "@react-three/fiber": "^8.15.11",
     "next": "14.0.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.48.2",
+    "react-textarea-autosize": "^8.5.3",
+    "react-vertical-timeline-component": "^3.6.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

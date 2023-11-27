@@ -200,7 +200,7 @@ export default function Island({
 function adjustNameForScreenSize() {
   let screenScale,
     screenPosition,
-    screenRotation = [-29.82, 0, -1.7];
+    screenRotation = [-29.82, 0, -1.65];
 
   if (window.innerWidth < 768) {
     screenScale = [0.8, 0.8, 0.8];

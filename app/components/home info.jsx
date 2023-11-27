@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { arrow } from "@assets/icons";
+import { Arrow } from "@assets/icons";
 
 const renderContent = {
   1: null,
@@ -35,13 +34,7 @@ function InfoBox({ text, link, btnText }) {
         className='neo-brutalism-white neo-btn'
       >
         {btnText}
-        <Image
-          src={arrow}
-          alt='arrow'
-          width={"1rem"}
-          height={"1rem"}
-          className='object-contain'
-        />
+        <Arrow />
       </a>
     </div>
   );

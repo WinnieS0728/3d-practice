@@ -9,6 +9,10 @@
   --green-rgb: 125 161 35;
 }
 
+html {
+  --line-color: #e5e7eb;
+}
+
 body {
   font-family: "Work Sans", sans-serif;
 }
@@ -19,6 +23,16 @@ body:has(.card[data-color="blue"]:hover) {
 
 body:has(.card[data-color="green"]:hover) {
   background-color: rgb(var(--green-rgb) / 25%);
+}
+
+@layer base {
+  main {
+    @apply px-8;
+  }
+
+  input,textarea {
+    @apply px-4 py-2 border rounded-md w-full
+  }
 }
 
 @layer utilities {

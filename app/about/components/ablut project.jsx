@@ -7,7 +7,7 @@ export default function AboutProject() {
       <section>
         <h2 className='text-3xl py-2'>This project is make with...</h2>
         <hr className='my-2 bg-white border-0 h-1' />
-        <article className='grid gap-4 justify-center items-center'>
+        <article className='grid grid-cols-[repeat(auto-fit,minmax(20rem,1fr))] gap-4 justify-center items-center'>
           <SkillCard
             src={icons.nextjs}
             title='Next JS'

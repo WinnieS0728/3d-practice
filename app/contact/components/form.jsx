@@ -66,19 +66,19 @@ export default function ContactForm() {
       >
         <InputLayout
           id={"from_name"}
-          label='name'
+          label='Name'
           placeholder='WinnieS QQ'
           error={errors["from_name"]}
         />
         <InputLayout
           id={"from_mail"}
-          label='email'
+          label='Email'
           placeholder='WinnieS@gmail.com'
           error={errors["from_mail"]}
         />
         <InputLayout
           id={"message"}
-          label='message'
+          label='Message'
           placeholder='tell me anything...'
           error={errors["message"]}
         />

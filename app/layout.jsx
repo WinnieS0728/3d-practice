@@ -4,18 +4,20 @@ import { ToastContainer } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 import "@assets/globals.css";
-import { Footer } from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "3d practicing",
+  title: "3D portfolio",
   description: "next & r3f",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
+      <head>
+        <link rel="icon" href="/microphone.png" type="image/jpeg" sizes="64x64" />
+      </head>
       <body className={inter.className}>
         <NavBar />
         {children}

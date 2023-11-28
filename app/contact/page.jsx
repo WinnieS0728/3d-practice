@@ -6,7 +6,7 @@ export default function ContactPage() {
     <>
       <main>
         <div>
-          <h1 className='text-center text-4xl'>contact me</h1>
+          <h1 className='text-center text-4xl uppercase'>contact me</h1>
           <ContactForm />
         </div>
       </main>

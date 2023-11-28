@@ -23,10 +23,10 @@ export default function AboutMe() {
             />
             <h2 className='text-5xl capitalize'>WinnieS</h2>
           </div>
-          <p className='border-l-4 px-4 py-2 mb-8'>
-            junior frontend developer <br />
-            music lover
-          </p>
+          <ul className='border-l-4 px-4 py-2 mb-8 list-inside leading-normal'>
+            <li className="list-['🧑🏻‍💻']"> junior frontend developer</li>
+            <li className="list-['🎶']"> music lover</li>
+          </ul>
           <a
             href='https://linktr.ee/WinnieS0728'
             target='_blank'

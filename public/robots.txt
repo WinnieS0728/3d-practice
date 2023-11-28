@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://my-3d-portfolio-ten.vercel.app/
+
+# Sitemaps
+Sitemap: https://my-3d-portfolio-ten.vercel.app/sitemap.xml

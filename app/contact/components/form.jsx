@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { sendEmail } from "./email";
 import AutoResizeTextArea from "react-textarea-autosize";
+import { toast } from "react-toastify";
 
 const email_schema = z.object({
   from_name: z.string().min(1, "required"),
@@ -36,12 +37,25 @@ export default function ContactForm() {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = methods;
 
   function onSubmit(data) {
-    sendEmail(data);
-
-    // reset();
+    toast.promise(sendEmail(data), {
+      pending: "sending Email...",
+      success: {
+        render() {
+          reset();
+          return "email send success !";
+        },
+      },
+      error: {
+        render({ data }) {
+          console.log(data.text);
+          return "something error";
+        },
+      },
+    });
   }
 
   return (

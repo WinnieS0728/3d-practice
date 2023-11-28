@@ -82,7 +82,7 @@ function adjustIslandForScreenSize() {
   let screenPosition = [0, -10, -40];
   let rotation = [-0.1, 4.7, 0];
 
-  if (window.innerWidth < 768) {
+  if (typeof window !== "undefined" && window.innerWidth < 768) {
     screenScale = [0.9, 0.9, 0.9];
   } else {
     screenScale = [1, 1, 1];
@@ -93,7 +93,7 @@ function adjustIslandForScreenSize() {
 function adjustPlaneForScreenSize() {
   let screenScale, screenPosition;
 
-  if (window.innerWidth < 768) {
+  if (typeof window !== "undefined" && window.innerWidth < 768) {
     screenScale = [1.5, 1.5, 1.5];
     screenPosition = [0, -1.5, 0];
   } else {

@@ -5,7 +5,7 @@ import { Arrow } from "@assets/icons";
 export default function AboutMe() {
   return (
     <section>
-      <h1 className='uppercase text-3xl text-center'>about me</h1>
+      {/* <h1 className='uppercase text-3xl text-center'>about me</h1> */}
       <article className='flex justify-center md:justify-start items-center px-16 py-8 gap-24'>
         <Image
           src={imgs.logo}
@@ -27,12 +27,14 @@ export default function AboutMe() {
             junior frontend developer <br />
             music lover
           </p>
-          <button
-            type='button'
+          <a
+            href='https://linktr.ee/WinnieS0728'
+            target='_blank'
+            rel='noopener noreferrer'
             className='btn flex justify-center items-center gap-2'
           >
-            more about me <Arrow color="white" />
-          </button>
+            more about me <Arrow color='white' />
+          </a>
         </div>
       </article>
     </section>

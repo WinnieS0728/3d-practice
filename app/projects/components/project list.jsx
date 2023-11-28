@@ -12,7 +12,7 @@ import { projects } from "../contents/project";
 
 export default function ProjectList() {
   return (
-    <div className="my-4">
+    <div className='my-4'>
       <VerticalTimeline lineColor=''>
         {projects.map((project) => (
           <TimeLineElement
@@ -45,6 +45,10 @@ function TimeLineElement({ project }) {
           />
         }
         date={project.date}
+        contentStyle={{
+          borderBottom: "0.8rem solid #00BEFF",
+          boxShadow: "none",
+        }}
       >
         <div className='flex flex-col sm:flex-row gap-4 items-center'>
           <div>

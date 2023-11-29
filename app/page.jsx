@@ -1,6 +1,6 @@
 "use client";
-import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Loader from "./components/loder";
 import Island from "../src/models/island";
 import Sky from "../src/models/sky";
@@ -9,19 +9,12 @@ import Plane from "../src/models/plane";
 import { cn } from "@utils/cn";
 import HomeInfo from "./components/home info";
 import { Footer } from "./components/footer";
+import Name from "@/src/models/name";
+import { PresentationControls } from "@react-three/drei";
 
 export default function Home() {
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
-
-  const [islandScale, islandPosition, islandRotation] =
-    adjustIslandForScreenSize();
-  const [planeScale, planePosition] = adjustPlaneForScreenSize();
-
-  // const music = useMemo(() => new Audio("/sounds/sakura.mp3"), []);
-  // useEffect(() => {
-  //   music.play();
-  // }, [music]);
 
   return (
     <>
@@ -52,22 +45,9 @@ export default function Home() {
               />
 
               <Sky isRotating={isRotating} />
-              <Island
-                scale={islandScale}
-                position={islandPosition}
-                rotation={islandRotation}
-                isRotating={isRotating}
-                setIsRotating={setIsRotating}
-                setCurrentStage={setCurrentStage}
-              />
-
+              <Scene setCurrentStage={setCurrentStage} />
               <Bird />
-              <Plane
-                isRotating={isRotating}
-                scale={planeScale}
-                position={planePosition}
-                rotation={[0, 20, 0]}
-              />
+              <Plane isRotating={isRotating} />
             </Suspense>
           </Canvas>
         </section>
@@ -77,29 +57,48 @@ export default function Home() {
   );
 }
 
-function adjustIslandForScreenSize() {
-  let screenScale = null;
-  let screenPosition = [0, -10, -40];
-  let rotation = [-0.1, 4.7, 0];
+const Scene = ({ setCurrentStage }) => {
+  const islandRef = useRef();
+  const [showName, setShowName] = useState(false);
+  useFrame(() => {
+    const rotationY = Math.abs(
+      (islandRef.current.parent.rotation.y - 6.25) % 6.25
+    );
+    switch (true) {
+      case rotationY < 1.8 || 5.6 < rotationY:
+        setCurrentStage(1);
+        setShowName(true);
+        break;
+      case 2 < rotationY && rotationY < 2.3:
+        setCurrentStage(2);
+        setShowName(false);
+        break;
+      case 3.4 < rotationY && rotationY < 3.75:
+        setCurrentStage(3);
+        setShowName(false);
+        break;
+      case 5 < rotationY && rotationY < 5.4:
+        setCurrentStage(4);
+        setShowName(false);
+        break;
+      default:
+        setCurrentStage(null);
+        setShowName(false);
+        break;
+    }
+  });
 
-  if (typeof window !== "undefined" && window.innerWidth < 768) {
-    screenScale = [0.9, 0.9, 0.9];
-  } else {
-    screenScale = [1, 1, 1];
-  }
-
-  return [screenScale, screenPosition, rotation];
-}
-function adjustPlaneForScreenSize() {
-  let screenScale, screenPosition;
-
-  if (typeof window !== "undefined" && window.innerWidth < 768) {
-    screenScale = [1.5, 1.5, 1.5];
-    screenPosition = [0, -1.5, 0];
-  } else {
-    screenScale = [3, 3, 3];
-    screenPosition = [0, 0.3, -4];
-  }
-
-  return [screenScale, screenPosition];
-}
+  return (
+    <>
+      <PresentationControls polar={[0, 0]}>
+        <group
+          position={[0, -0.3, 0]}
+          ref={islandRef}
+        >
+          <Island />
+          <Name />
+        </group>
+      </PresentationControls>
+    </>
+  );
+};

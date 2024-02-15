@@ -1,9 +1,10 @@
 import { Inter } from "next/font/google";
 import NavBar from "./components/navBar";
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css'
+import "react-toastify/dist/ReactToastify.css";
 import "@assets/globals.css";
+import { Footer } from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,11 +17,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <head>
-        <link rel="icon" href="/microphone.png" type="image/jpeg" sizes="64x64" />
+        <link
+          rel='icon'
+          href='/microphone.png'
+          type='image/jpeg'
+          sizes='64x64'
+        />
       </head>
       <body className={inter.className}>
         <NavBar />
         {children}
+        <Footer className={"absolute bottom-0"} />
         <ToastContainer
           position='top-center'
           autoClose={5000}

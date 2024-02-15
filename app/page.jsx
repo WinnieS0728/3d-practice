@@ -1,19 +1,18 @@
 "use client";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
-import Loader from "./components/loder";
-import Island from "../src/models/island";
-import Sky from "../src/models/sky";
-import Bird from "../src/models/bird";
-import Plane from "../src/models/plane";
-import { cn } from "@utils/cn";
-import HomeInfo from "./components/home info";
-import { Footer } from "./components/footer";
 import Name from "@/src/models/name";
-import { PresentationControls } from "@react-three/drei";
+import { Html, PresentationControls } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { cn } from "@utils/cn";
+import { Suspense, useRef, useState } from "react";
+import Bird from "../src/models/bird";
+import Island from "../src/models/island";
+import Plane from "../src/models/plane";
+import Sky from "../src/models/sky";
+import HomeInfo from "./components/home info";
+import Loader from "./components/loder";
+import { DragArrow } from "@assets/icons";
 
 export default function Home() {
-  const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
 
   return (
@@ -24,9 +23,7 @@ export default function Home() {
             {currentStage && <HomeInfo currentState={currentStage} />}
           </div>
           <Canvas
-            className={cn("w-full h-full cursor-grab", {
-              "cursor-grabbing": isRotating,
-            })}
+            className={cn("w-full h-full cursor-grab")}
             camera={{
               near: 0.1,
               far: 1000,
@@ -44,22 +41,27 @@ export default function Home() {
                 intensity={0.1}
               />
 
-              <Sky isRotating={isRotating} />
+              <Sky />
               <Scene setCurrentStage={setCurrentStage} />
               <Bird />
-              <Plane isRotating={isRotating} />
+              <Plane />
+              <Html position={[-0.7, -3.2, 0]}>
+                <div className='flex gap-2 justify-center items-center'>
+                  <p className='whitespace-nowrap'>drag to visit my island</p>
+                  <DragArrow />
+                </div>
+              </Html>
             </Suspense>
           </Canvas>
         </section>
       </main>
-      <Footer className={"absolute bottom-0"} />
     </>
   );
 }
 
 const Scene = ({ setCurrentStage }) => {
   const islandRef = useRef();
-  const [showName, setShowName] = useState(false);
+
   useFrame(() => {
     const rotationY = Math.abs(
       (islandRef.current.parent.rotation.y - 6.25) % 6.25
@@ -67,23 +69,18 @@ const Scene = ({ setCurrentStage }) => {
     switch (true) {
       case rotationY < 1.8 || 5.6 < rotationY:
         setCurrentStage(1);
-        setShowName(true);
         break;
       case 2 < rotationY && rotationY < 2.3:
         setCurrentStage(2);
-        setShowName(false);
         break;
       case 3.4 < rotationY && rotationY < 3.75:
         setCurrentStage(3);
-        setShowName(false);
         break;
       case 5 < rotationY && rotationY < 5.4:
         setCurrentStage(4);
-        setShowName(false);
         break;
       default:
         setCurrentStage(null);
-        setShowName(false);
         break;
     }
   });

@@ -1,27 +1,19 @@
 "use client";
-import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useMemo, useState } from "react";
-import Loader from "./components/loder";
-import Island from "../src/models/island";
-import Sky from "../src/models/sky";
-import Bird from "../src/models/bird";
-import Plane from "../src/models/plane";
+import Name from "@/src/models/name";
+import { Html, PresentationControls } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { cn } from "@utils/cn";
+import { Suspense, useRef, useState } from "react";
+import Bird from "../src/models/bird";
+import Island from "../src/models/island";
+import Plane from "../src/models/plane";
+import Sky from "../src/models/sky";
 import HomeInfo from "./components/home info";
-import { Footer } from "./components/footer";
+import Loader from "./components/loder";
+import { DragArrow } from "@assets/icons";
 
 export default function Home() {
-  const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
-
-  const [islandScale, islandPosition, islandRotation] =
-    adjustIslandForScreenSize();
-  const [planeScale, planePosition] = adjustPlaneForScreenSize();
-
-  // const music = useMemo(() => new Audio("/sounds/sakura.mp3"), []);
-  // useEffect(() => {
-  //   music.play();
-  // }, [music]);
 
   return (
     <>
@@ -31,9 +23,7 @@ export default function Home() {
             {currentStage && <HomeInfo currentState={currentStage} />}
           </div>
           <Canvas
-            className={cn("w-full h-full cursor-grab", {
-              "cursor-grabbing": isRotating,
-            })}
+            className={cn("w-full h-full cursor-grab")}
             camera={{
               near: 0.1,
               far: 1000,
@@ -51,55 +41,61 @@ export default function Home() {
                 intensity={0.1}
               />
 
-              <Sky isRotating={isRotating} />
-              <Island
-                scale={islandScale}
-                position={islandPosition}
-                rotation={islandRotation}
-                isRotating={isRotating}
-                setIsRotating={setIsRotating}
-                setCurrentStage={setCurrentStage}
-              />
-
+              <Sky />
+              <Scene setCurrentStage={setCurrentStage} />
               <Bird />
-              <Plane
-                isRotating={isRotating}
-                scale={planeScale}
-                position={planePosition}
-                rotation={[0, 20, 0]}
-              />
+              <Plane />
+              <Html position={[-0.7, -3.2, 0]}>
+                <div className='flex gap-2 justify-center items-center'>
+                  <p className='whitespace-nowrap'>drag to visit my island</p>
+                  <DragArrow />
+                </div>
+              </Html>
             </Suspense>
           </Canvas>
         </section>
       </main>
-      <Footer className={"absolute bottom-0"} />
     </>
   );
 }
 
-function adjustIslandForScreenSize() {
-  let screenScale = null;
-  let screenPosition = [0, -10, -40];
-  let rotation = [-0.1, 4.7, 0];
+const Scene = ({ setCurrentStage }) => {
+  const islandRef = useRef();
 
-  if (typeof window !== "undefined" && window.innerWidth < 768) {
-    screenScale = [0.9, 0.9, 0.9];
-  } else {
-    screenScale = [1, 1, 1];
-  }
+  useFrame(() => {
+    const rotationY = Math.abs(
+      (islandRef.current.parent.rotation.y - 6.25) % 6.25
+    );
+    switch (true) {
+      case rotationY < 1.8 || 5.6 < rotationY:
+        setCurrentStage(1);
+        break;
+      case 2 < rotationY && rotationY < 2.3:
+        setCurrentStage(2);
+        break;
+      case 3.4 < rotationY && rotationY < 3.75:
+        setCurrentStage(3);
+        break;
+      case 5 < rotationY && rotationY < 5.4:
+        setCurrentStage(4);
+        break;
+      default:
+        setCurrentStage(null);
+        break;
+    }
+  });
 
-  return [screenScale, screenPosition, rotation];
-}
-function adjustPlaneForScreenSize() {
-  let screenScale, screenPosition;
-
-  if (typeof window !== "undefined" && window.innerWidth < 768) {
-    screenScale = [1.5, 1.5, 1.5];
-    screenPosition = [0, -1.5, 0];
-  } else {
-    screenScale = [3, 3, 3];
-    screenPosition = [0, 0.3, -4];
-  }
-
-  return [screenScale, screenPosition];
-}
+  return (
+    <>
+      <PresentationControls polar={[0, 0]}>
+        <group
+          position={[0, -0.3, 0]}
+          ref={islandRef}
+        >
+          <Island />
+          <Name />
+        </group>
+      </PresentationControls>
+    </>
+  );
+};
